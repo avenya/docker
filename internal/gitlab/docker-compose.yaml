@@ -1,0 +1,28 @@
+version: '3.6'
+services:
+  gitlab:
+    image: gitlab/gitlab-ce:17.5.0-ce.0
+    container_name: gitlab
+    restart: always
+    hostname: gitlab.avenya.ch'
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'https://gitlab.avenya.ch'
+    ports:
+      - '31001:80'
+      - '31002:443'
+      - '31003:22'
+    volumes:
+      - '$GITLAB_HOME/config:/etc/gitlab'
+      - '$GITLAB_HOME/logs:/var/log/gitlab'
+      - '$GITLAB_HOME/data:/var/opt/gitlab'
+    shm_size: '256m'
+
+    labels:
+      - traefik.enable=true
+
+      - traefik.http.routers.portainer.entrypoints=web
+      - traefik.http.routers.portainer.rule=Host(`portainer.lan`)
+
+      - traefik.http.services.portainer.loadbalancer.server.port=9443
+      - traefik.http.services.portainer.loadbalancer.server.scheme=https
