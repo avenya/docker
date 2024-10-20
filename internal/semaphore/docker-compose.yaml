@@ -1,0 +1,14 @@
+services:
+    semaphore:
+        image: semaphoreui/semaphore:v2.10.30
+        container_name: semaphore
+        ports:
+            - 3000:3000
+        environment:
+            UID: ${UID}
+            GID: ${GID}
+            SEMAPHORE_DB_DIALECT: bolt
+            SEMAPHORE_ADMIN_PASSWORD: ${SEMAPHORE_ADMIN_PASSWORD}
+            SEMAPHORE_ADMIN_NAME: ${SEMAPHORE_ADMIN_NAME}
+            SEMAPHORE_ADMIN_EMAIL: ${SEMAPHORE_ADMIN_EMAIL}
+            SEMAPHORE_ADMIN: ${SEMAPHORE_ADMIN}
